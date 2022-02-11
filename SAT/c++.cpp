@@ -31,9 +31,8 @@ struct Rectangle {
 struct Rotated {
     Point tl;
     Point tr;
-    Point bl;  // switched bl, br and tl tr
+    Point bl;
     Point br;
-    
 };
 
 void printRectangleCoords(Rotated rectangle) {
@@ -89,7 +88,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
     float bmax = -1234;
     int NULL_VALUE = -1234;
     // Work out all perpendicular vectors on each edge for polygonA
-    for(int i = 0; i < 4; i++)  // sizeof(polygonA.edge)
+    for (int i = 0; i < 4; i++)  // sizeof(polygonA.edge)
     {
         Point perpendicularLine = {-polygonA.edge[i].y,
                                     polygonA.edge[i].x};
@@ -97,7 +96,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
     }
 
     // Work out all perpendicular vectors on each edge for polygonB
-    for(int i = 0; i < 4; i++)  // sizeof(polygonB.edge)
+    for (int i = 0; i < 4; i++)  // sizeof(polygonB.edge)
     {
         Point perpendicularLine = {-polygonB.edge[i].y,
                                     polygonB.edge[i].x};
@@ -159,12 +158,14 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
     Rotated tRR = getRotatedSquareCoordinates(thisRect);
     Rotated oRR = getRotatedSquareCoordinates(otherRect);
 
-    struct Polygon thisRectPolygon = { {
+    struct Polygon thisRectPolygon = { 
+        {
             {tRR.tr.x, tRR.tr.y},  // top-right
             {tRR.br.x, tRR.br.y},  // bottom-right
             {tRR.bl.x, tRR.bl.y},  // bottom-left
             {tRR.tl.x, tRR.tl.y}   // top-left
-        }, {
+        },
+        {
             {tRR.br.x - tRR.tr.x, tRR.br.y - tRR.tr.y},
             {tRR.bl.x - tRR.br.x, tRR.bl.y - tRR.br.y},
             {tRR.tl.x - tRR.bl.x, tRR.tl.y - tRR.bl.y},
@@ -172,12 +173,14 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
         }
     };
 
-    struct Polygon otherRectPolygon = { {
+    struct Polygon otherRectPolygon = {
+        {
             {oRR.tr.x, oRR.tr.y},
             {oRR.br.x, oRR.br.y},
             {oRR.bl.x, oRR.bl.y},
             {oRR.tl.x, oRR.tl.y}
-        }, {
+        },
+        {
             {oRR.br.x - oRR.tr.x, oRR.br.y - oRR.tr.y},
             {oRR.bl.x - oRR.br.x, oRR.bl.y - oRR.br.y},
             {oRR.tl.x - oRR.bl.x, oRR.tl.y - oRR.bl.y},
