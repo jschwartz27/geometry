@@ -43,7 +43,7 @@ void printRectangleCoords(Rotated rectangle) {
     cout << "br: " << "(" << rectangle.br.x << ", " << rectangle.br.y << ")\n" << endl;
 }
 
-Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle){ //From a rotated object
+Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle) { //From a rotated object
     // cx,cy are the centre coordinates, vx,vy is the point to be measured against the center point
     // Convert rotated angle into radians
 
@@ -141,7 +141,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
             }
         }
         // If there is no gap between the dot products projection then we will continue onto evaluating the next perpendicular edge.
-        if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)){
+        if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)) {
             continue;
         }
         // Otherwise, we know that there is no collision for definite.
