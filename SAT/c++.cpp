@@ -1,39 +1,12 @@
 // c++ version implemented from this video
 // https://www.youtube.com/watch?v=MvlhMEE9zuc
 
-// #include "helper.h"
+#include "helper.h"
 #include <cmath>
 #include <iostream>
 
 using namespace std;
 
-// Functional objects for the Seperate Axis Theorum (SAT)
-// Single vertex
-struct Point {
-    float x;
-    float y;
-};
-
-// The polygon that is formed from vertices and edges.
-struct Polygon {
-    Point vertex[4];
-    Point edge[4];
-};
-
-struct Rectangle {
-    float x;
-    float y;
-    float width;
-    float height;
-    float rotation;
-} rectangle1, rectangle2;
-
-struct Rotated {
-    Point tl;
-    Point tr;
-    Point bl;
-    Point br;
-};
 
 void printRectangleCoords(Rotated rectangle) {
     cout << "tl: " << "(" << rectangle.tl.x << ", " << rectangle.tl.y << ")" << endl;
@@ -42,7 +15,7 @@ void printRectangleCoords(Rotated rectangle) {
     cout << "br: " << "(" << rectangle.br.x << ", " << rectangle.br.y << ")\n" << endl;
 }
 
-Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle) { //From a rotated object
+Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle){ //From a rotated object
     // cx,cy are the centre coordinates, vx,vy is the point to be measured against the center point
     // Convert rotated angle into radians
 
@@ -88,7 +61,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
     float bmax = -1234;
     int NULL_VALUE = -1234;
     // Work out all perpendicular vectors on each edge for polygonA
-    for (int i = 0; i < 4; i++)  // sizeof(polygonA.edge)
+    for(int i = 0; i < 4; i++)  // sizeof(polygonA.edge)
     {
         Point perpendicularLine = {-polygonA.edge[i].y,
                                     polygonA.edge[i].x};
@@ -96,7 +69,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
     }
 
     // Work out all perpendicular vectors on each edge for polygonB
-    for (int i = 0; i < 4; i++)  // sizeof(polygonB.edge)
+    for(int i = 0; i < 4; i++)  // sizeof(polygonB.edge)
     {
         Point perpendicularLine = {-polygonB.edge[i].y,
                                     polygonB.edge[i].x};
@@ -140,7 +113,7 @@ bool sat(Polygon polygonA, Polygon polygonB) {
             }
         }
         // If there is no gap between the dot products projection then we will continue onto evaluating the next perpendicular edge.
-        if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)) {
+        if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)){
             continue;
         }
         // Otherwise, we know that there is no collision for definite.
@@ -158,14 +131,12 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
     Rotated tRR = getRotatedSquareCoordinates(thisRect);
     Rotated oRR = getRotatedSquareCoordinates(otherRect);
 
-    struct Polygon thisRectPolygon = { 
-        {
+    struct Polygon thisRectPolygon = { {
             {tRR.tr.x, tRR.tr.y},  // top-right
             {tRR.br.x, tRR.br.y},  // bottom-right
             {tRR.bl.x, tRR.bl.y},  // bottom-left
             {tRR.tl.x, tRR.tl.y}   // top-left
-        },
-        {
+        }, {
             {tRR.br.x - tRR.tr.x, tRR.br.y - tRR.tr.y},
             {tRR.bl.x - tRR.br.x, tRR.bl.y - tRR.br.y},
             {tRR.tl.x - tRR.bl.x, tRR.tl.y - tRR.bl.y},
@@ -173,14 +144,12 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
         }
     };
 
-    struct Polygon otherRectPolygon = {
-        {
+    struct Polygon otherRectPolygon = { {
             {oRR.tr.x, oRR.tr.y},
             {oRR.br.x, oRR.br.y},
             {oRR.bl.x, oRR.bl.y},
             {oRR.tl.x, oRR.tl.y}
-        },
-        {
+        }, {
             {oRR.br.x - oRR.tr.x, oRR.br.y - oRR.tr.y},
             {oRR.bl.x - oRR.br.x, oRR.bl.y - oRR.br.y},
             {oRR.tl.x - oRR.bl.x, oRR.tl.y - oRR.bl.y},
