@@ -15,7 +15,8 @@ void printRectangleCoords(Rotated rectangle) {
     cout << "br: " << "(" << rectangle.br.x << ", " << rectangle.br.y << ")\n" << endl;
 }
 
-Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle){ //From a rotated object
+Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngle){
+    //From a rotated object
     // cx,cy are the centre coordinates, vx,vy is the point to be measured against the center point
     // Convert rotated angle into radians
 
@@ -27,10 +28,10 @@ Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngl
     float rotatedX = cx + distance * cos(originalAngle + rotatedAngle);
     float rotatedY = cy + distance * sin(originalAngle + rotatedAngle);
 
-    struct Point p;
-    p.x = rotatedX;
-    p.y = rotatedY;
-    return p;
+    return {
+        rotatedX,
+        rotatedY
+    };
 }
 
 // Get the rotated coordinates for the square
@@ -112,7 +113,8 @@ bool sat(Polygon polygonA, Polygon polygonB) {
                 bmin = dot;
             }
         }
-        // If there is no gap between the dot products projection then we will continue onto evaluating the next perpendicular edge.
+        // If there is no gap between the dot products projection then we will continue onto evaluating the
+        // next perpendicular edge.
         if ((amin < bmax && amin > bmin) || (bmin < amax && bmin > amin)){
             continue;
         }
@@ -121,7 +123,8 @@ bool sat(Polygon polygonA, Polygon polygonB) {
             return false;
         }
     }
-    /* If we have gotten this far. Where we have looped through all of the perpendicular edges and not a single one of there projections had
+    /* If we have gotten this far. Where we have looped through all of the perpendicular edges and not a
+    single one of there projections had
     a gap in them. Then we know that the 2 polygons are colliding for definite then. */
     return true;
 }
