@@ -4,7 +4,9 @@
 #include "helper.h"
 #include <cmath>
 #include <iostream>
-
+#include <opencv2/imgproc.hpp>
+//#include <opencv2/highgui/highgui.hpp>
+//using namespace cv;
 using namespace std;
 
 
@@ -24,7 +26,7 @@ Point workOutNewPoints(float cx, float cy, float vx, float vy, float rotatedAngl
     float dx = vx - cx;
     float dy = vy - cy;
     float distance = sqrt(dx * dx + dy * dy);
-    float originalAngle = atan2(dy,dx);
+    float originalAngle = atan2(dy, dx);
     float rotatedX = cx + distance * cos(originalAngle + rotatedAngle);
     float rotatedY = cy + distance * sin(originalAngle + rotatedAngle);
 
@@ -165,7 +167,7 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
     } else {
         // Because we are working with vertices and edges. This algorithm does not cover the normal un-rotated rectangle
         // algorithm which just deals with sides
-        if (thisRect.rotation == 0 && otherRect.rotation == 0)
+        if (fmod(thisRect.rotation, 90.f) == 0.f && fmod(otherRect.rotation, 90.f) == 0.f)
         {
             if (!(
                 thisRect.x > otherRect.x + otherRect.width || 
@@ -184,22 +186,21 @@ bool detectRectangleCollision(Rectangle thisRect, Rectangle otherRect) {
 int main()
 {   
     // rectangle1
-    rectangle1.x = 0;
-    rectangle1.y = 0;
-    rectangle1.width = 100;
-    rectangle1.height = 100;
-    rectangle1.rotation = 0;
+    Rectangle rectangle1 = {
+        0.f,
+        0.f,
+        100.f,
+        100.f,
+        0.f
+    };
     // rectangle2
-    /*rectangle2.x = 20;
-    rectangle2.y = 20;
-    rectangle2.width = 100;
-    rectangle2.height = 100;
-    rectangle2.rotation = 1;*/
-    rectangle2.x = 0;
-    rectangle2.y = 0;
-    rectangle2.width = 100;
-    rectangle2.height = 100;
-    rectangle2.rotation = 1;
+    Rectangle rectangle2 = {
+        0.f,
+        -99.f,
+        100.f,
+        100.f,
+        23.f
+    };
 
     if (detectRectangleCollision(rectangle1, rectangle2)) {
         cout << "COLLISION!";

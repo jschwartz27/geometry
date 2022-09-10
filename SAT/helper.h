@@ -17,12 +17,31 @@ struct Rectangle {
     float width;
     float height;
     float rotation;
-} rectangle1, rectangle2;
+};
 
 struct Rotated {
     Point tl;
     Point tr;
     Point bl;  // switched bl, br and tl tr
     Point br;
-    
+};
+
+
+// UE4 Stuff
+struct FVector {
+    float X;
+    float Y;
+    float Z;
+};
+
+struct FRotator {
+    float Pitch;
+    float Yaw;
+    float Roll;
+};
+
+struct FTransform {
+    FVector location;
+    FRotator rotation;
+    FVector scale = {1.f, 1.f, 1.f};
 };
